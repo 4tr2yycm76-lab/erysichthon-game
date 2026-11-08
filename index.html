@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#151b20" />
+  <title>無底之胃：飢餓的詛咒｜神話互動遊戲</title>
+  <style>
+    :root { --bg:#11181d; --ink:#f0e7d5; --dim:#b9b4a9; --gold:#eed09b; --panel:#1c282d; --line:#57665c; --red:#cf806f; --green:#a9c0a1; --blue:#a8c8ca; }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%, #37504c 0%,#161e23 43%,#11181d 85%);color:var(--ink);font-family:ui-serif,"Noto Serif TC","Songti TC","PMingLiU",serif;line-height:1.75}
+    button{font:inherit;cursor:pointer} button:disabled{cursor:not-allowed;opacity:.35}
+    a{color:#ddc391}
+    .app{width:min(720px,calc(100% - 28px));margin:0 auto;padding:18px 0 42px}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #48544f;padding:4px 2px 16px;margin-bottom:22px}
+    .brand{font-size:13px;letter-spacing:.17em;color:#d1b78c;font-weight:700}
+    .meta{font:12px/1.4 system-ui,sans-serif;color:#a8b6ad}
+    main{min-height:560px}.screen{display:none;animation:appear .25s ease-out}.screen.active{display:block}
+    @keyframes appear{from{opacity:.35;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+    .chapter{color:#c5a575;text-align:center;font-size:12px;font-weight:700;letter-spacing:.2em;margin:6px 0 8px}
+    h1,h2,h3{font-weight:600;line-height:1.35;margin:0}h1{font-size:clamp(30px,7vw,49px);letter-spacing:.07em;text-align:center}h2{font-size:clamp(23px,5vw,32px);text-align:center}h3{font-size:18px}
+    .subtitle{text-align:center;color:#d8c6ac;margin:8px auto 22px;font-size:14px;letter-spacing:.07em}
+    .prose{color:#ded8c7;font-size:16px;margin:13px 0;line-height:1.95}
+    .muted{color:var(--dim);font-size:13px}
+    .small{font-size:13px}.center{text-align:center}
+    .art{position:relative;min-height:215px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:20px;border:1px solid #5b6053;margin:18px 0 20px;background:radial-gradient(circle at 50% 52%,#536151 0%,#283932 43%,#18252a 80%)}
+    .art::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.4),transparent 60%);pointer-events:none}
+    .art .orb{position:absolute;width:235px;height:235px;border-radius:50%;border:1px solid #afab7f88;box-shadow:0 0 90px #c5b07730,inset 0 0 55px #c9b58a22}
+    .art .scene-icon{font-size:112px;line-height:1;filter:drop-shadow(0 16px 17px #0007);z-index:1}
+    .art .caption{position:absolute;bottom:10px;color:#f5e5bd;font-size:11px;letter-spacing:.13em;z-index:2}
+    .art.famine{background:radial-gradient(circle at 50% 50%,#63473d 0%,#34262a 48%,#192127 90%)}
+    .art.feast{background:radial-gradient(circle at 50% 50%,#765b38 0%,#3e3529 48%,#182025 90%)}
+    .art.sun{background:radial-gradient(circle at 50% 60%,#697b62 0%,#394c43 48%,#172624 90%)}
+    .panel{background:linear-gradient(135deg,#24302f,#1b2529);border:1px solid #536259;border-radius:16px;padding:18px 20px;margin:16px 0}
+    .panel.gold{border-color:#806a47;background:linear-gradient(130deg,#373229,#242722)}
+    .note{border-left:3px solid #c9aa77;padding:8px 12px;color:#d1c8b6;font-size:13px;background:#ffffff08;margin:14px 0}
+    .buttons{display:grid;gap:11px;margin-top:22px}
+    .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:1px solid #ac9977;background:linear-gradient(180deg,#dfc193,#bb9b6a);color:#172021;padding:14px 16px;border-radius:12px;font-family:inherit;font-size:16px;font-weight:700;transition:transform .12s,background .12s;min-height:52px}
+    .btn:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.06)}
+    .btn.secondary{background:#25332f;color:#f2e8d5;border-color:#67786f}
+    .btn.ghost{background:transparent;color:#c9c0ad;border-color:#616c64;font-size:14px}
+    .btn:focus-visible,.action:focus-visible{outline:3px solid #a9d5d7;outline-offset:3px}
+    .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:19px 0}
+    .stat{border:1px solid #51615b;background:#202e2f;border-radius:11px;padding:11px 10px}
+    .stat-head{display:flex;justify-content:space-between;gap:4px;font:12px system-ui,sans-serif;color:#ddd8c7}
+    .stat strong{font-size:13px}
+    .bar{background:#0e181a;height:9px;border-radius:20px;margin-top:11px;overflow:hidden;border:1px solid #50615c}
+    .fill{height:100%;width:0;transition:width .3s;min-width:0;border-radius:20px}
+    #hunger-bar{background:linear-gradient(90deg,#a9876d,#dc806e)}
+    #money-bar{background:linear-gradient(90deg,#a28859,#e1c184)}
+    #family-bar{background:linear-gradient(90deg,#719a84,#a3caaa)}
+    .turn{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#e0cfac;font-size:13px;font-weight:700;letter-spacing:.06em}
+    .action-list{display:grid;gap:10px;margin:16px 0}
+    .action{text-align:left;background:#263430;border:1px solid #748474;border-radius:12px;padding:14px 16px;color:var(--ink);width:100%;min-height:76px}
+    .action:hover:not(:disabled){background:#33463d;transform:translateY(-1px)}
+    .action strong{display:block;font-size:17px}.action span{display:block;color:#d0d2c4;font:13px/1.5 system-ui,sans-serif;margin-top:4px}
+    .result{min-height:84px;background:#182423;border:1px solid #465b52;border-radius:12px;padding:14px;margin:12px 0}
+    .result b{color:#eed09b}.result p{margin:3px 0 0;color:#d8d6c7;font-size:14px}
+    .hidden{display:none!important}
+    .ref{border-top:1px solid #48544f;padding-top:14px;margin-top:30px;font:12px/1.8 system-ui,sans-serif;color:#b6bdb6}
+    .ref summary{cursor:pointer;color:#d4c3a4;font-weight:700}.ref p{margin:7px 0}
+    .footer{text-align:center;font:12px/1.7 system-ui,sans-serif;color:#899b92;margin-top:18px}
+    @media(max-width:480px){.app{width:min(720px,calc(100% - 20px));padding-top:10px}.top{padding-bottom:11px}.panel{padding:15px}.stat{padding:9px 7px}.stat-head{font-size:10px}.stat strong{font-size:12px}.art{min-height:190px}.art .scene-icon{font-size:96px} .action strong{font-size:16px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="top"><span class="brand">MYTH / INTERACTIVE</span><span class="meta">神話主題網頁遊戲 · 第一版</span></header>
+    <main id="main">
+      <section class="screen active" id="menu" aria-labelledby="game-title">
+        <p class="chapter">古典神話 · 選擇與代價</p>
+        <h1 id="game-title">無底之胃</h1>
+        <p class="subtitle">飢餓的詛咒 · THE ENDLESS HUNGER</p>
+        <div class="art"><div class="orb"></div><div class="scene-icon" role="img" aria-label="神聖森林">🌳</div><span class="caption">一棵不該倒下的樹</span></div>
+        <p class="prose center">你有無數的財富，卻即將失去最簡單的幸福：<br><strong>吃飽。</strong></p>
+        <p class="muted center">以厄律西克同的希臘神話為基礎改編的選擇型小遊戲。</p>
+        <div class="buttons"><button class="btn" id="start">開始遊戲</button><button class="btn secondary" id="show-rules">遊戲玩法與說明</button></div>
+      </section>
+
+      <section class="screen" id="rules" aria-labelledby="rules-title">
+        <p class="chapter">遊戲說明</p><h2 id="rules-title">怎麼遊玩？</h2>
+        <div class="panel"><p class="prose">① 在序章面對女祭司的警告，決定是否砍伐聖樹。</p><p class="prose">② 如果進入詛咒主線，每天從三個行動中選擇一個。</p><p class="prose">③ 觀察三種數值：<strong>飢餓</strong>愈高愈危險，<strong>財富</strong>和<strong>家人處境</strong>愈高愈好。</p><p class="prose">④ 每回合結束，詛咒都會讓飢餓再次上升。試著撐過六天，看看你留下了什麼。</p></div>
+        <p class="note">這是神話改編遊戲，不是古典文本中的真實六日紀錄；遊戲結局會標示原典啟發與原創部分。</p>
+        <div class="buttons"><button class="btn" id="rules-start">開始冒險</button><button class="btn ghost" id="rules-home">返回首頁</button></div>
+      </section>
+
+      <section class="screen" id="prologue" aria-labelledby="prologue-title">
+        <p class="chapter">序章 · 神聖的界線</p><h2 id="prologue-title">聖林的警告</h2>
+        <div class="art"><div class="orb"></div><div class="scene-icon" role="img" aria-label="大樹">🌲</div><span class="caption">狄蜜特的聖林</span></div>
+        <p class="prose">你是厄律西克同。你帶著斧頭走入女神狄蜜特的聖林，準備砍下樹木。</p>
+        <div class="panel gold"><b>女祭司：</b><p class="prose">「年輕人，停下來。這片森林屬於女神。不要為了自己的欲望破壞它。」</p></div>
+        <p class="muted">* 此處採用卡利馬科斯版本中「女神化身祭司勸阻」的情節。</p>
+        <div class="buttons"><button class="btn secondary" id="spare">放下斧頭，離開聖林</button><button class="btn" id="cut">無視警告，砍倒聖樹</button></div>
+      </section>
+
+      <section class="screen" id="curse" aria-labelledby="curse-title">
+        <p class="chapter">第一幕 · 懲罰</p><h2 id="curse-title">詛咒降臨</h2>
+        <div class="art famine"><div class="orb"></div><div class="scene-icon" role="img" aria-label="破碎的樹木">🪓</div><span class="caption">聖樹倒下，精靈哀鳴</span></div>
+        <p class="prose">你沒有停手。聖樹倒下，女神得知了你的褻瀆。</p>
+        <p class="prose">狄蜜特派遣「飢餓」的化身，在你熟睡時將詛咒吹入你的身體。清晨醒來，你發現自己再也無法真正吃飽。</p>
+        <div class="panel gold"><strong>接下來的六天，你能撐到最後嗎？</strong><p class="muted">注意：在原典中，這道詛咒無法靠正常進食解除。</p></div>
+        <div class="buttons"><button class="btn" id="curse-play">迎接第一天</button></div>
+      </section>
+
+      <section class="screen" id="playing" aria-labelledby="play-title">
+        <div class="turn"><span id="day-label">第 1 天 / 共 6 天</span><span id="curse-add">今晚飢餓 +18</span></div>
+        <h2 id="play-title" style="margin-top:10px">在飢餓與代價之間</h2>
+        <div class="stats" aria-label="角色狀態">
+          <div class="stat"><div class="stat-head"><span>飢餓</span><strong id="hunger-value">25</strong></div><div class="bar"><div id="hunger-bar" class="fill"></div></div></div>
+          <div class="stat"><div class="stat-head"><span>財富</span><strong id="money-value">65</strong></div><div class="bar"><div id="money-bar" class="fill"></div></div></div>
+          <div class="stat"><div class="stat-head"><span>家人處境</span><strong id="family-value">72</strong></div><div class="bar"><div id="family-bar" class="fill"></div></div></div>
+        </div>
+        <div class="panel"><h3 id="day-title">第一天</h3><p id="day-story" class="prose"></p><p class="muted">每一天只能選擇一項行動。選擇後，飢餓會因詛咒再度上升。</p></div>
+        <div class="action-list" id="actions">
+          <button class="action" data-action="eat"><strong>🍞 購買食物，舉辦宴席</strong><span>飢餓 −33 · 財富 −16 · 家人處境 −4</span></button>
+          <button class="action" data-action="sell"><strong>🪙 變賣家族財物</strong><span>財富 +26 · 飢餓 +4 · 家人處境 −16</span></button>
+          <button class="action" data-action="care"><strong>🫶 照顧家人，保留物資</strong><span>家人處境 +13 · 財富 −9 · 飢餓 +8</span></button>
+        </div>
+        <div class="result hidden" id="turn-result" aria-live="polite"><b id="result-title"></b><p id="result-text"></p></div>
+        <p class="note">飢餓到達 100：挑戰結束。家人處境降到 25 以下：家族離散。遊戲數值為創意設計，不是神話原典的數字。</p>
+        <button class="btn ghost" id="play-home">放棄本局，返回首頁</button>
+      </section>
+
+      <section class="screen" id="ending" aria-labelledby="ending-title">
+        <p class="chapter" id="ending-chapter">故事的另一面</p><h2 id="ending-title">結局</h2>
+        <div class="art sun" id="ending-art"><div class="orb"></div><div class="scene-icon" id="ending-icon" role="img" aria-label="結局圖示">🌱</div><span class="caption" id="ending-caption">選擇留下的痕跡</span></div>
+        <div class="panel gold"><p class="prose" id="ending-text"></p><p class="muted" id="ending-origin"></p></div>
+        <p id="ending-stats" class="muted center"></p>
+        <div class="buttons"><button class="btn" id="again">重新開始</button><button class="btn secondary" id="end-rules">閱讀神話背景與改編說明</button></div>
+      </section>
+    </main>
+
+    <details class="ref" id="sources">
+      <summary>神話原典與遊戲改編說明（點擊展開）</summary>
+      <p>① 卡利馬科斯《致狄蜜特頌歌》：厄律西克同砍伐聖林，女神化身女祭司警告他，後以飢餓懲罰；他最終流落乞食。<a href="https://www.theoi.com/Text/CallimachusHymns2.html" target="_blank" rel="noopener noreferrer">閱讀古典文本英譯</a></p>
+      <p>② 奧維德《變形記》第八卷：聖樹與樹精、飢餓化身、家產耗盡、女兒梅斯特拉遭出賣與變形，以及主角走向自我毀滅。<a href="https://www.theoi.com/Text/OvidMetamorphoses8.html" target="_blank" rel="noopener noreferrer">閱讀古典文本英譯</a></p>
+      <p>③ 本遊戲的六日回合、飢餓與財富數值、家人處境系統、放下斧頭的替代結局及選擇結果，都是為了互動而設計的創意改編，不等於原典情節。</p>
+      <p>④ 遊戲沒有再現原典全部情節；為適合課堂展示，將較殘酷的部分以文字象徵呈現。</p>
+    </details>
+    <footer class="footer">《無底之胃：飢餓的詛咒》· 離線可玩的 HTML 小遊戲 · 期末專題原型 v1.0</footer>
+  </div>
+<script>
+  // ===========================
+  // 這裡是遊戲的 JavaScript：處理按鈕、數值與結局
+  // 對初學者：先不要修改這個區域，也能正常遊玩。
+  // ===========================
+  const $ = (id) => document.getElementById(id);
+  const screens = ["menu", "rules", "prologue", "curse", "playing", "ending"];
+  const show = (id) => {
+    screens.forEach((name) => $(name).classList.toggle("active", name === id));
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
+  const startState = () => ({ day: 1, hunger: 25, money: 65, family: 72, history: [] });
+  let state = startState();
+  const clamp = (v) => Math.max(0, Math.min(100, v));
+  const dayStories = [
+    ["異樣的清晨", "昨晚你夢見無窮無盡的宴席。醒來後，你才吃完早餐，腹中卻又像火焰般灼燒。"],
+    ["再多也不夠", "僕人端來滿桌食物。你發現每次進食只能獲得短暫的緩解，飢餓很快又會回來。"],
+    ["逐漸見底的庫房", "財物不斷從家中搬出。昔日富有的宅邸，開始為一個人的飢餓而動搖。"],
+    ["家人的目光", "家人擔憂地看著你。當飢餓支配每一項決定，你還能顧及身邊的人嗎？"],
+    ["最後幾筆財產", "你已經付出許多代價，但詛咒沒有停止。誘惑你繼續索取的聲音愈來愈大。"],
+    ["無法填滿的空洞", "這是第六天。你依然飢餓，眼前還有最後一次選擇。你能保住自己以外的什麼？"]
+  ];
+  const changes = {
+    eat: { hunger: -33, money: -16, family: -4, label: "舉辦宴席", text: "你吞下大量食物。飢餓短暫消退，可是詛咒並沒有離開。" },
+    sell: { hunger: 4, money: 26, family: -16, label: "變賣家產", text: "一件件家傳物品被搬走。你換得財富，也讓家人承受新的代價。" },
+    care: { hunger: 8, money: -9, family: 13, label: "照顧家人", text: "你將物資留給家人。他們的處境稍有改善，但飢餓仍在你身上蔓延。" }
+  };
+  const curseIncrease = (day) => 14 + 4 * day;  // 第一日 +18，之後逐日增加
+
+  function update(){
+    $("day-label").textContent = `第 ${state.day} 天 / 共 6 天`;
+    $("curse-add").textContent = `今晚飢餓 +${curseIncrease(state.day)}`;
+    [["hunger",state.hunger],["money",state.money],["family",state.family]].forEach(([name,val])=>{
+      $(name+"-value").textContent = String(val);
+      $(name+"-bar").style.width = val+"%";
+    });
+    const [title, story] = dayStories[state.day-1];
+    $("day-title").textContent = title;
+    $("day-story").textContent = story;
+    const canEat = state.money >= 16;
+    const canCare = state.money >= 9;
+    document.querySelector('[data-action="eat"]').disabled = !canEat;
+    document.querySelector('[data-action="care"]').disabled = !canCare;
+    $("turn-result").classList.add("hidden");
+  }
+
+  function ending(kind){
+    const endings = {
+      spared: { chapter:"架空結局 · 聖林仍在", title:"未曾降臨的詛咒", icon:"🌳", caption:"樹仍然站在這裡", text:"你放下斧頭，轉身離開聖林。這一次，厄律西克同沒有犯下褻瀆之罪，也沒有遇到飢餓詛咒。有些災難，可以在最初的選擇中避免。", origin:"這是為遊戲加入的假想結局，並非古典神話原有劇情。" },
+      protected: { chapter:"原創分歧 · 代價與克制", title:"沒有失去所有人", icon:"🕯️", caption:"飢餓仍在，牽絆尚存", text:"六天過去，飢餓並未被治癒。但你沒有任由它吞噬身邊所有人。這不是女神的寬恕，只是你在悲劇中保住了一部分牽絆。", origin:"這是遊戲創造的分歧結局；古典版本並未記載他成功保住家人。" },
+      poor: { chapter:"古典文本取向 · 乞食", title:"十字路口的乞者", icon:"🥀", caption:"無止境的匱乏", text:"你勉強撐過六天，卻讓家人付出沉重代價。遊戲的終幕借用了卡利馬科斯筆下家產衰敗、終至乞食的悲劇意象。飢餓依舊沒有結束。", origin:"致敬卡利馬科斯《致狄蜜特頌歌》的結尾；六日選擇與具體結果仍屬創意改編。" },
+      famine: { chapter:"古典文本取向 · 毀滅", title:"吞噬一切的飢餓", icon:"🕳️", caption:"欲望的盡頭", text:"飢餓到達無法承受的極限。你失去了控制，也失去能讓自己得到滿足的一切。故事以黑暗收束，呼應奧維德筆下極端而悲劇性的結局。", origin:"致敬奧維德《變形記》第八卷的悲劇終幕；遊戲以象徵性畫面呈現，不直接描寫暴力細節。" },
+      family: { chapter:"原創分歧 · 家族離散", title:"空蕩的家", icon:"🏚️", caption:"留下的只有空屋", text:"你仍然試圖填飽肚子，但家人已無力繼續承受。這次遊戲提前結束。飢餓不只吞噬一人的財產，也讓整個家庭逐漸瓦解。", origin:"這是遊戲新增的失敗條件，用來表現神話中主角對家人的傷害。" }
+    };
+    const e=endings[kind];
+    $("ending-chapter").textContent=e.chapter;
+    $("ending-title").textContent=e.title;
+    $("ending-icon").textContent=e.icon;
+    $("ending-caption").textContent=e.caption;
+    $("ending-text").textContent=e.text;
+    $("ending-origin").textContent=e.origin;
+    $("ending-stats").textContent=kind==="spared"?"你在悲劇開始前改變了命運。":`最終狀態：飢餓 ${state.hunger} · 財富 ${state.money} · 家人處境 ${state.family}`;
+    show("ending");
+  }
+
+  function playAction(action){
+    const c=changes[action];
+    if(!c)return;
+    if((action==="eat"&&state.money<16)||(action==="care"&&state.money<9))return;
+    state.hunger=clamp(state.hunger+c.hunger);
+    state.money=clamp(state.money+c.money);
+    state.family=clamp(state.family+c.family);
+    state.hunger=clamp(state.hunger+curseIncrease(state.day));
+    state.history.push(action);
+    // 先判斷失敗，再判斷六天是否完成。
+    if(state.hunger>=100){ending("famine");return;}
+    if(state.family<=25){ending("family");return;}
+    if(state.day>=6){ending(state.family>=50?"protected":"poor");return;}
+    const completedDay=state.day;
+    state.day+=1;
+    update();
+    $("result-title").textContent=`第 ${completedDay} 天的選擇：${c.label}`;
+    $("result-text").textContent=`${c.text} 夜晚過去，飢餓又增加 ${curseIncrease(completedDay)} 點。`;
+    $("turn-result").classList.remove("hidden");
+  }
+
+  function resetToMenu(){state=startState();show("menu");}
+  $("start").addEventListener("click",()=>show("prologue"));
+  $("show-rules").addEventListener("click",()=>show("rules"));
+  $("rules-start").addEventListener("click",()=>show("prologue"));
+  $("rules-home").addEventListener("click",resetToMenu);
+  $("spare").addEventListener("click",()=>ending("spared"));
+  $("cut").addEventListener("click",()=>show("curse"));
+  $("curse-play").addEventListener("click",()=>{state=startState();update();show("playing");});
+  document.querySelectorAll("[data-action]").forEach(b=>b.addEventListener("click",()=>playAction(b.dataset.action)));
+  $("play-home").addEventListener("click",resetToMenu);
+  $("again").addEventListener("click",resetToMenu);
+  $("end-rules").addEventListener("click",()=>{$("sources").open=true;show("rules");$("sources").scrollIntoView({behavior:"smooth"});});
+</script>
+</body>
+</html>
