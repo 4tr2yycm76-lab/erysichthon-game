@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#171d1d" />
+<title>無底之胃 2.0｜六日完整劇情測試版</title>
+<style>
+:root{--bg:#131b1b;--surface:#202a27;--surface2:#273630;--line:#677262;--gold:#e6c78d;--gold2:#be9f6e;--ink:#f4ecdc;--soft:#d3d1c4;--muted:#b3bbb0;--green:#94b29e;--red:#e5a79a;--blue:#aac7cf}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -15%,#3b4f42 0,#192624 42%,#101819 88%);color:var(--ink);font-family:ui-serif,"Noto Serif TC","Songti TC","PingFang TC",serif;line-height:1.85}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.14;background-image:repeating-linear-gradient(87deg,transparent 0 69px,#ebd8a408 70px 71px);z-index:0}
+button{font:inherit;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible{outline:3px solid #e9cf93;outline-offset:3px}
+.shell{width:min(780px,calc(100% - 24px));margin:0 auto;position:relative;z-index:1;padding:12px 0 40px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #69736169;padding:8px 5px 14px;margin-bottom:19px}
+.brand{color:#f1d4a2;font:700 12px/1.5 system-ui,"PingFang TC",sans-serif;letter-spacing:.14em}
+.tag{color:#b7c5b8;font:12px/1.4 system-ui,"PingFang TC",sans-serif;text-align:right}
+.track{height:3px;background:#36443f;border-radius:3px;overflow:hidden;margin-bottom:19px}.track>div{height:100%;background:linear-gradient(90deg,#9bbb9c,#e3c88e);transition:width .3s}
+.scene{animation:enter .25s ease-out}@keyframes enter{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{color:var(--gold);font:700 12px/1.65 system-ui,"PingFang TC",sans-serif;letter-spacing:.14em;text-align:center;margin:6px 0 9px}
+h1,h2,h3{font-weight:600;line-height:1.43;margin:0}h1{font-size:clamp(38px,7.5vw,60px);letter-spacing:.1em;text-align:center}h2{font-size:clamp(25px,5vw,36px);text-align:center;letter-spacing:.035em}h3{font-size:19px}
+.subtitle{text-align:center;font-size:14px;color:#d7c6ab;letter-spacing:.075em;margin:8px 0 22px}
+.painting{position:relative;overflow:hidden;border-radius:18px;margin:18px 0 17px;border:1px solid #8290797a;background:#24312e;box-shadow:0 12px 40px #0004;line-height:0}
+.painting svg{display:block;width:100%;height:auto;aspect-ratio:700/355}
+.painting:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,#10191b50,transparent 45%)}
+.painting .scene-title{position:absolute;z-index:2;left:16px;bottom:13px;color:#f6e9ce;font:700 11px/1.5 system-ui,"PingFang TC",sans-serif;letter-spacing:.13em;text-shadow:0 2px 7px #000a}
+.story{font-size:clamp(16px,2.5vw,18px);line-height:2.08;color:#e7dfcf;margin:16px 4px}.story p{margin:0 0 12px}
+.card{background:linear-gradient(150deg,#273630,#1b2727);border:1px solid #6c7b6a8a;border-radius:15px;padding:18px;margin:17px 0;box-shadow:inset 0 1px #ffffff0a}
+.card.amber{background:linear-gradient(150deg,#39352b,#242824);border-color:#a38a61a6}
+.mini-label{font:700 12px/1.5 system-ui,"PingFang TC",sans-serif;letter-spacing:.09em;color:#e1c18c;margin:0 0 10px}
+.dialogue{padding:16px 17px;background:#1a2625;border:1px solid #687e6b;border-radius:13px;margin:15px 0;min-height:122px;box-shadow:inset 3px 0 #b99c6a}
+.dialogue .speaker{font:700 13px/1.5 system-ui,"PingFang TC",sans-serif;color:#e7c78f;margin:0 0 8px}
+.dialogue p{color:#f5eddc;margin:0;font-size:17px;line-height:1.98;white-space:pre-line}
+.num{color:#b9c3b4;font:12px/1.5 system-ui,"PingFang TC",sans-serif;text-align:right;margin:8px 2px}
+.buttons{display:grid;gap:10px;margin:20px 0}.btn{width:100%;min-height:52px;border-radius:11px;padding:13px 15px;border:1px solid #c9b081;background:linear-gradient(180deg,#efdaaf,#c6a779);color:#182321;font-size:16px;font-weight:700;text-align:center;line-height:1.55;transition:filter .15s}
+.btn:active{filter:brightness(.87)}.btn.secondary{background:#2b3c35;border-color:#79947d;color:#f8ecd9}.btn.ghost{background:transparent;border-color:#6d7970;color:#ddd4c5}.btn .hint{display:block;font:12px/1.6 system-ui,"PingFang TC",sans-serif;font-weight:400;opacity:.85;margin-top:4px}
+.explore-items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:18px 0}
+.discover{border:1px solid #697a6f;border-radius:13px;background:linear-gradient(#34443a,#25332f);padding:15px 8px;color:#f6ead9;min-height:125px;text-align:center}
+.discover[aria-pressed="true"]{border-color:#e9cd96;background:#435346}
+.discover .symbol{font-size:31px;display:block;line-height:1.4;margin-bottom:8px}
+.discover .item-name{font-size:14px;line-height:1.6;font-weight:700;display:block}.discover .status{font:11px/1.5 system-ui,sans-serif;color:#c6d1c2}
+.clue{border-left:3px solid #e2c38e;padding:10px 14px;background:#d4cdad12;margin:12px 0;min-height:75px;color:#eee5d4}.clue strong{color:#e8ca95}.clue p{margin:4px 0 0;line-height:1.9}
+.states{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:17px 0}.state{background:#21302c;border:1px solid #63776a;border-radius:12px;padding:10px}.state .head{display:flex;justify-content:space-between;gap:4px;align-items:center;font:12px/1.5 system-ui,"PingFang TC",sans-serif;color:#e8e4d5}.state .head b{font-size:14px}.bar{height:7px;background:#111b1b;border-radius:5px;overflow:hidden;margin:9px 0 2px}.bar>div{height:100%;border-radius:5px;transition:width .3s}
+.day-option{width:100%;padding:16px;text-align:left;display:block;background:#283831;color:#f5ebd9;border:1px solid #7b8b78;border-radius:13px;margin:11px 0}.day-option strong{font-size:17px}.day-option .effect{display:block;font:12px/1.6 system-ui,"PingFang TC",sans-serif;color:#c6cfbb;margin-top:6px}
+.fine{font:12px/1.7 system-ui,"PingFang TC",sans-serif;color:#b8c3b8}.footnote{border-top:1px solid #5964596c;padding:15px 3px 0;margin-top:30px;font:12px/1.75 system-ui,"PingFang TC",sans-serif;color:#aebcad}.footnote a{color:#e3c48c}.footnote summary{cursor:pointer;color:#ead3a7;font-weight:700}
+.pill{display:inline-block;border:1px solid #9c8a6b;border-radius:99px;padding:3px 10px;color:#e3c997;font:700 11px/1.5 system-ui,"PingFang TC",sans-serif}
+.result-note{background:#25352e;border-left:3px solid var(--green);padding:14px;margin:16px 0;border-radius:8px}.result-note p{margin:6px 0}
+.footer{margin-top:24px;color:#9caa9c;text-align:center;font:12px/1.7 system-ui,"PingFang TC",sans-serif}
+@media(max-width:520px){.topbar{padding:5px 0 11px}.tag{font-size:10px}.card{padding:15px}.explore-items{gap:6px}.discover{min-height:104px;padding:12px 5px}.discover .symbol{font-size:27px}.discover .item-name{font-size:12px}.state{padding:8px 6px}.state .head{font-size:10px}.state .head b{font-size:12px}.dialogue{padding:13px;min-height:112px}.story{font-size:16px}.painting .scene-title{font-size:10px}.btn{font-size:15px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.dim{color:#b8c5bc}.thin-rule{border:0;border-top:1px solid #59695970;margin:20px 0}.mood-art{height:auto;min-height:245px;background:radial-gradient(circle at 50% 5%,#64705b44,#202b29 66%,#162324);border-radius:18px;border:1px solid #71826a99;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin:18px 0 16px;box-shadow:inset 0 0 80px #101b1b}
+.mood-art .visual{width:100%;height:100%;max-height:350px;display:block}.mood-art .scene-title{position:absolute;bottom:11px;left:15px;color:#f0dbb3;letter-spacing:.12em;font:700 11px/1.5 system-ui,sans-serif;text-shadow:0 2px 7px #000a}
+.story-chip{display:inline-block;border:1px solid #b69e78a0;border-radius:100px;padding:3px 11px;color:#f1d3a0;font:11px/1.6 system-ui,sans-serif}.status-alert{border:1px solid #d3a884b0;border-radius:12px;background:#573b32a8;padding:13px;margin:14px 0;color:#f4ddc9}.subtle-panel{border:1px solid #7d8c7a;background:#243730;border-radius:12px;padding:14px;margin:13px 0}
+.logbook{display:grid;gap:8px;margin:15px 0}.logentry{border-left:3px solid #9ba990;padding:9px 12px;background:#25342c;border-radius:6px;font-size:14px}.logentry b{color:#e2c591}.note-changed{font-size:13px;color:#dccbaf}.dimmed-option{opacity:.46;filter:saturate(.5)}.dimmed-option:disabled{border-style:dashed}.opening-quote{text-align:center;color:#d9ceb9;font-size:16px;line-height:2}
+.small-actions{display:flex;justify-content:center;gap:10px;margin:8px 0 17px;flex-wrap:wrap}.small-actions button{background:transparent;color:#dbd4bc;border:1px solid #70826c;padding:7px 12px;border-radius:8px;font-size:12px}
+@media(max-width:520px){.mood-art{min-height:168px}.small-actions button{font-size:11px}.story-chip{font-size:10px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar"><div class="brand">THE ENDLESS HUNGER <span style="opacity:.65">/ MYTH</span></div><div class="tag">2.0 完整劇情測試版<br>序章＋六日</div></header>
+  <div class="track" aria-hidden="true"><div id="progress"></div></div>
+  <main id="app" aria-live="polite"><p class="story">遊戲正在啟動。如果只看到空白，請使用 Safari 開啟 GitHub Pages 的遊戲網址，而不是 iPad 檔案預覽。</p></main>
+  <details class="footnote"><summary>原典與遊戲改編說明</summary>
+    <p>《無底之胃》取材自卡利馬科斯《致狄蜜特頌歌》與奧維德《變形記》第八卷。女神變作祭司勸阻砍樹的情節取自卡利馬科斯；聖樹精靈、飢餓化身與女兒梅斯特拉的重要情節取自奧維德。</p>
+    <p>本作將兩個古典版本的素材明確融合成同一段「神話改編故事」，不是任何一部原典的逐字重現。梅斯特拉的童年回憶、白色祈願帶、達蒙管家、探索物件和六天數值規則是原創情節。</p>
+    <p><a href="https://www.theoi.com/Text/CallimachusHymns2.html" target="_blank" rel="noopener noreferrer">卡利馬科斯英譯</a> · <a href="https://www.theoi.com/Text/OvidMetamorphoses8.html" target="_blank" rel="noopener noreferrer">奧維德英譯</a></p>
+  </details>
+  <footer class="footer">單一 HTML 檔 · 不需登入、不依賴網路圖片 · 獨立完整版測試，不覆蓋既有作品</footer>
+</div>
+<script>
+'use strict';
+const root=document.getElementById('app');
+const SAVE_KEY='wudi_v2_full_2026_v1';
+const initialState=()=>({stage:'home',found:[],clue:null,step:0,day:1,stats:{hunger:25,money:65,family:72},flags:{trust:'neutral',repented:false,soldMestra:false,escaped:false},crisis:0,history:[],recent:null,ending:null,escapeChoice:null});
+let s=initialState();
+try{const old=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');if(old&&old.stats&&old.flags&&old.stage&&Number.isInteger(old.day))s={...initialState(),...old};}catch(e){}
+const cap=(n)=>Math.max(0,Math.min(100,n));
+function art(type){
+const defs=`<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0.1" y2="1"><stop offset="0" stop-color="#8d9c83"/><stop offset=".55" stop-color="#668472"/><stop offset="1" stop-color="#334b45"/></linearGradient>
+<radialGradient id="light"><stop offset="0" stop-color="#f9edb6" stop-opacity=".9"/><stop offset="1" stop-color="#fae3a2" stop-opacity="0"/></radialGradient>
+<linearGradient id="trunk" x1="0" y1="0" x2="1" y2=".5"><stop stop-color="#382f29"/><stop offset=".5" stop-color="#75604a"/><stop offset="1" stop-color="#342a2a"/></linearGradient>
+<linearGradient id="hall" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#6e624d"/><stop offset=".55" stop-color="#3c3c35"/><stop offset="1" stop-color="#1b2828"/></linearGradient>
+<linearGradient id="darksky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#4d4d56"/><stop offset="1" stop-color="#232c31"/></linearGradient>
+<filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+<filter id="glow"><feGaussianBlur stdDeviation="3"/></filter>
+</defs>`;
+let svg='';let label='';
+if(type==='forest' || type==='forestcut'){
+  const cut=type==='forestcut';label=cut?'聖林的最後一刻｜橡樹倒下':'狄蜜特的聖林｜神聖橡樹';
+  svg=`<rect width="700" height="355" fill="${cut?'url(#darksky)':'url(#sky)'}"/>
+  <circle cx="365" cy="105" r="176" fill="url(#light)" opacity="${cut?'.26':'.68'}"/>
+  <path d="M0 202Q85 152 158 193T360 193T700 162V355H0Z" fill="${cut?'#3f4b4a':'#5d7b65'}"/>
+  <path d="M0 251Q133 220 246 250T505 235T700 245V355H0Z" fill="${cut?'#343d3e':'#42634f'}"/>
+  ${Array.from({length:14},(_,i)=>{const x=i*55-30,h=85+(i*43)%75;return `<path d="M${x} 274l12 -${h} 12 ${h}Z" fill="${cut?'#283536':'#2e5244'}" opacity=".7"/>`}).join('')}
+  <ellipse cx="350" cy="323" rx="280" ry="32" fill="#263d34" opacity=".65"/>
+  ${cut?`
+  <path d="M280 290Q293 255 303 232L397 232Q418 267 420 290Z" fill="url(#trunk)" stroke="#a89573" stroke-width="2"/>
+  <ellipse cx="352" cy="231" rx="50" ry="15" fill="#8b6b51" stroke="#c3a17c" stroke-width="3"/>
+  <ellipse cx="352" cy="231" rx="31" ry="8" fill="none" stroke="#c49f78" stroke-width="2"/>
+  <path d="M430 292l152 -59 26 23 -170 68Z" fill="#615544"/>
+  <path d="M577 238l54 18 5 -13 -53 -24Z" fill="#445a4b"/>
+  <path d="M318 221L344 243" stroke="#bd514e" stroke-width="5" opacity=".75"/>
+  <path d="M485 266Q467 248 454 237Q485 240 494 253" fill="none" stroke="#cfc5a6" stroke-width="4"/>
+  <ellipse cx="356" cy="315" rx="90" ry="13" fill="#161f24" opacity=".5"/>`:
+  `<path d="M321 307C327 256 322 186 330 119Q344 87 360 121C365 177 365 247 377 307Z" fill="url(#trunk)" stroke="#9f876b" stroke-width="2"/>
+  <path d="M334 184Q294 131 260 109M365 191Q422 125 463 110M346 145Q337 100 328 75" stroke="#6a5747" stroke-width="21" fill="none" stroke-linecap="round"/>
+  <path d="M334 184Q294 131 260 109M365 191Q422 125 463 110" stroke="#ae9470" stroke-width="3" fill="none" stroke-linecap="round" opacity=".45"/>
+  <ellipse cx="333" cy="105" rx="142" ry="74" fill="#365e49"/>
+  <ellipse cx="255" cy="118" rx="91" ry="65" fill="#456d4d"/>
+  <ellipse cx="442" cy="110" rx="100" ry="69" fill="#467451"/>
+  <ellipse cx="373" cy="63" rx="104" ry="60" fill="#587b50"/>
+  <ellipse cx="305" cy="51" rx="82" ry="48" fill="#5d825a"/>
+  <ellipse cx="413" cy="46" rx="83" ry="53" fill="#64875b"/>
+  <g fill="#a3ab78" opacity=".4"><circle cx="221" cy="108" r="12"/><circle cx="284" cy="61" r="11"/><circle cx="436" cy="82" r="13"/><circle cx="376" cy="28" r="12"/></g>
+  <path d="M410 150q20 24 11 37" fill="none" stroke="#f4e6c7" stroke-width="5"/><path d="M410 150q-16 8 -25 0" fill="none" stroke="#efe2c3" stroke-width="4"/>
+  <path d="M404 152L415 166 406 175" fill="none" stroke="#d5c19d" stroke-width="2"/>`}
+  <g fill="#d8b97b" opacity=".65">${Array.from({length:20},(_,i)=>`<circle cx="${30+(i*71)%645}" cy="${275+(i*19)%55}" r="${i%3===0?2.6:1.4}"/>`).join('')}</g>
+  <path d="M0 330Q135 316 256 332T503 331T700 326V355H0Z" fill="#152b27" opacity=".65"/>`;
+}
+if(type==='dream'){
+  label='詛咒之夜｜無法靠近的盛宴';
+  svg=`<rect width="700" height="355" fill="url(#darksky)"/>
+  <circle cx="370" cy="123" r="200" fill="#ad8b69" opacity=".12" filter="url(#blur)"/>
+  <path d="M0 286Q180 250 336 287T700 284V355H0Z" fill="#131c22"/>
+  <g opacity=".55">${Array.from({length:8},(_,i)=>`<path d="M${35+i*93} 0V${140+i%3*34}" stroke="#a4a09c" stroke-width="3"/>`).join('')}</g>
+  <ellipse cx="350" cy="259" rx="255" ry="37" fill="#ac8a60" opacity=".15"/>
+  <path d="M171 258L217 218 495 218 532 258Z" fill="#655144" stroke="#ad916c" stroke-width="3"/>
+  <rect x="217" y="259" width="276" height="67" fill="#3e3633"/>
+  ${Array.from({length:5},(_,i)=>`<ellipse cx="${245+i*55}" cy="217" rx="19" ry="9" fill="#d8b58d" opacity="${.7-i*.06}"/><path d="M${231+i*55} 216q10 -22 29 0" fill="#d2a473" opacity=".85"/>`).join('')}
+  <g stroke="#a6aab0" fill="none" opacity=".75"><path d="M343 50Q297 89 310 142Q312 180 290 191" stroke-width="15"/><path d="M367 51Q408 93 389 141Q386 180 413 198" stroke-width="16"/></g>
+  <ellipse cx="355" cy="51" rx="30" ry="38" fill="#9a9e9c" opacity=".62"/><path d="M328 80Q355 104 383 80L419 225Q348 247 275 225Z" fill="#73747c" opacity=".45"/>
+  <g fill="#b0b7bb" opacity=".5">${Array.from({length:12},(_,i)=>`<circle cx="${(i*79)%690}" cy="${20+(i*31)%250}" r="${i%3+1}"/>`).join('')}</g>`;
+}
+if(type==='banquet'){
+  label='厄律西克同的宅邸｜無法結束的早餐';
+  svg=`<rect width="700" height="355" fill="url(#hall)"/>
+  <rect x="240" y="24" width="220" height="221" rx="102" fill="#8e8873" stroke="#b4a98f" stroke-width="10"/>
+  <path d="M260 236V126A91 91 0 0 1 442 126V236Z" fill="#8a9681"/>
+  <circle cx="359" cy="120" r="68" fill="url(#light)"/>
+  <path d="M260 213Q325 166 381 195T442 187V236H260Z" fill="#516954"/>
+  ${[62,154,519,611].map(x=>`<rect x="${x}" y="28" width="28" height="262" fill="#b09c7c"/><rect x="${x-9}" y="27" width="46" height="17" fill="#d6bd93"/><rect x="${x-9}" y="275" width="46" height="15" fill="#bca47d"/>`).join('')}
+  <path d="M0 299h700v56H0Z" fill="#2e2b2a"/>
+  <path d="M75 262Q350 228 625 262L650 311H50Z" fill="#6a5342" stroke="#b69364" stroke-width="3"/>
+  <ellipse cx="350" cy="259" rx="259" ry="30" fill="#ad8158" opacity=".4"/>
+  ${[186,284,407,510].map((x,i)=>`<ellipse cx="${x}" cy="248" rx="${30+i%2*7}" ry="10" fill="#e0cf9d"/><ellipse cx="${x}" cy="247" rx="${22+i%2*6}" ry="6" fill="#746e52"/>`).join('')}
+  <path d="M238 239q13 -31 35 0" fill="#d6a876"/><path d="M434 244q12 -33 30 0" fill="#d7ab73"/>
+  <g fill="#b5544d"><circle cx="338" cy="230" r="10"/><circle cx="352" cy="236" r="8"/><circle cx="365" cy="230" r="9"/></g>
+  <path d="M114 208q-9 -28 0 -51q8 24 2 51M575 208q-8 -35 0 -52q9 28 3 52" stroke="#ffd28b" stroke-width="6" stroke-linecap="round"/>
+  <path d="M0 324Q200 302 350 323T700 324V355H0Z" fill="#1c2524" opacity=".85"/>`;
+}
+return `<div class="painting"><svg viewBox="0 0 700 355" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${label}">${defs}${svg}</svg><span class="scene-title">${label}</span></div>`;
+}
+const explore={
+plaque:{emoji:'🏺',name:'還願木牌',description:'一位母親留下這塊小木牌，感謝女神讓病後的孩子重新走進田野。這片森林，承載著人們對豐收與平安的盼望。',tag:'信仰與感激'},
+ribbon:{emoji:'🎗️',name:'白色祈願帶',description:'枝條上繫著一條泛白的布帶。梅斯特拉認得它——那是她幼時生病後，家人帶她來向女神獻上的祈願。',tag:'梅斯特拉的回憶'},
+tree:{emoji:'🌳',name:'古老的橡樹',description:'把手貼在樹皮上，彷彿聽見極細微的呼吸。這棵樹不只是木材；在古老傳說中，神聖的樹木也可能是精靈的居所。',tag:'生命的界線'}
+};
+const memory=[
+{speaker:'旁白',line:'午後的陽光從樹葉間落下。你與女兒梅斯特拉走進聖林，迎面而來的是潮濕泥土與穀穗的氣味。'},
+{speaker:'梅斯特拉',line:'「父親，您還記得這裡嗎？我小時候生過一場病，家人帶我到這裡祈願。」'},
+{speaker:'厄律西克同',line:'「不過是一棵樹，竟然值得妳記到現在？」'},
+{speaker:'梅斯特拉',line:'「我記得的不是樹而已。是那時候，有人希望我好起來。」'},
+{speaker:'旁白',line:'達蒙帶著僕人來到樹下。他奉命尋找建造宴飲場所所需的木材。眾人望向眼前這棵最古老的橡樹。'},
+{speaker:'達蒙',line:'「主人……這棵樹受到女神庇護。若把它砍倒，恐怕會有後果。」'}
+];
+const collapse=[
+{speaker:'旁白',line:'你奪過斧頭。第一下落在樹幹，森林裡的鳥鳴突然停止。'},
+{speaker:'旁白',line:'深色的汁液沿著傷口滲出。樹葉瞬間失去光澤，巨大的枝條顫抖，如同有人在疼痛中呻吟。'},
+{speaker:'樹木精靈',line:'「我在此守護過無數個春天……你將明白，奪取，並不等於擁有。」'},
+{speaker:'梅斯特拉',line:'「父親……停下來，好不好？」'},
+{speaker:'旁白',line:'橡樹轟然倒下。梅斯特拉沒有再說話，只彎下腰，拾起那條沾了泥土的白色祈願帶。'}
+];
+const dreams=[
+{speaker:'旁白',line:'那一夜，狄蜜特命令飢餓的化身前往你的房間。你夢見一桌永遠無法碰到的盛宴。'},
+{speaker:'飢餓化身',line:'「你奪走了她的森林。」'},
+{speaker:'飢餓化身',line:'「現在，讓我奪走你的滿足。」'},
+{speaker:'旁白',line:'每當你伸手抓住麵包，食物便在指尖化為灰燼。黎明時，你帶著從未體驗過的飢餓醒來。'}
+];
+const breakfast=[
+{speaker:'旁白',line:'第一日清晨。達蒙端來早餐，你很快就吃完了，腹中卻仍像有火在燃燒。'},
+{speaker:'厄律西克同',line:'「再拿一份來。我根本沒有吃飽！」'},
+{speaker:'達蒙',line:'「主人，您已經吃下六人份的早餐了。」'},
+{speaker:'厄律西克同',line:'「那又如何？我付得起！」'},
+{speaker:'旁白',line:'門邊的梅斯特拉看著桌上的空盤，想起昨日那棵倒下的橡樹。'},
+{speaker:'梅斯特拉',line:'「父親……您真的沒事嗎？」'},
+{speaker:'旁白',line:'你知道這份飢餓不正常，但家中的糧食與金錢依然充足。你打算如何度過第一天？'}
+];
+const dayActions={
+feast:{name:'舉辦盛宴，盡情進食',effect:'飢餓 −27 ｜ 財富 −14 ｜ 家人 −4',delta:{hunger:-27,money:-14,family:-4},story:'達蒙只好再次吩咐廚房。盤子不斷端上桌，又不斷被清空。梅斯特拉站在門口，第一次露出害怕的神情。',echo:'飢餓短暫平息，但你仍記得每一道被端走的空盤。'},
+share:{name:'把部分糧食分給家僕',effect:'飢餓 +9 ｜ 財富不變 ｜ 家人 +10',delta:{hunger:9,money:0,family:10},story:'僕人驚訝地接過食物。梅斯特拉小心地問你是否身體不適；你無法回答，卻第一次察覺這場詛咒已開始牽動整個家。',echo:'你把一些食物留給了別人，自己的胃卻更加灼痛。'},
+priest:{name:'向女神的祭司詢問詛咒',effect:'飢餓 +5 ｜ 財富 −4 ｜ 家人 +6',delta:{hunger:5,money:-4,family:6},story:'祭司聽完你的敘述，望向遠處聖林的方向：「這不像普通疾病。你或許應該想想，自己究竟從那裡拿走了什麼。」她沒有許諾任何解藥。',echo:'你沒有找到解答，卻開始明白飢餓可能是那棵聖樹留下的後果。'}
+};
+// 2.0 六日完整版：保留序章畫面與第一日操作，擴充其餘五日。
+const dayData={
+  1:{title:'永遠吃不飽的早餐',chapter:'第一幕 · 詛咒初現',art:'banquet',lines:()=>breakfast},
+  2:{title:'庫房裡的聲音',chapter:'第一幕 · 豐饒的反噬',art:'pantry',lines:()=>[
+    {speaker:'旁白',line:'第二日清晨。達蒙抱著帳冊走進餐廳，身後跟著幾名神色不安的僕人。'},
+    {speaker:'達蒙',line:'「主人，昨晚耗掉的穀物，是我們原本要留到冬天的儲糧。」'},
+    {speaker:'厄律西克同',line:'「冬天還沒到。我現在就快餓死了！」'},
+    {speaker:'達蒙',line:'「您確實受苦。但如果什麼都不留下，這個家到了冬天該靠什麼活？」'},
+    {speaker:'旁白',line:'梅斯特拉倚著門框。手中那條白布帶，是她從倒下的聖樹旁拾回的。'},
+    {speaker:'梅斯特拉',line:'「父親，還記得以前的收穫祭嗎？那時我們總把最好的麵包分給彼此。」'},
+    {speaker:'厄律西克同',line:'「我沒有忘。但我現在只想填飽肚子。」'},
+    {speaker:'飢餓化身',line:'「金器、地契、糧食……只要能換成一口食物，都可以交出去。」'},
+    {speaker:'旁白',line:'達蒙等待你的決定。你第一次意識到：飢餓消耗的，不只是餐桌上的食物。'}]},
+  3:{title:'餐桌上的沉默',chapter:'第二幕 · 梅斯特拉的請求',art:'table',lines:()=>[
+    {speaker:'旁白',line:'第三日。僕人收走最後一道空盤，梅斯特拉仍坐在長桌另一端。她面前只有一小塊麵包。'},
+    {speaker:'梅斯特拉',line:'「父親，您還記得我小時候最喜歡吃什麼嗎？」'},
+    {speaker:'厄律西克同',line:'「……現在不是說這個的時候。」'},
+    {speaker:'梅斯特拉',line:'「是無花果。每次收穫季，您總把最甜的一籃留給我。」'},
+    {speaker:'旁白',line:'她將麵包推向你。那是她今天的午餐。'},
+    {speaker:'梅斯特拉',line:'「我知道您正在受苦。我不是要您挨餓。」'},
+    {speaker:'梅斯特拉',line:'「可是，如果全家的糧食都只夠您吃……我們要怎麼辦？」'},
+    {speaker:'厄律西克同',line:'「妳希望我忍著飢餓嗎？」'},
+    {speaker:'梅斯特拉',line:'「我希望我們不要全部一起挨餓。」'},
+    {speaker:'旁白',line:'她沒有離席。這一次，她想知道父親願不願意真正聽她說話。'}]},
+  4:{title:'在樹墩前',chapter:'第二幕 · 女神的質問',art:'forestcut',lines:()=>[
+    {speaker:'旁白',line:'第四日黎明前，你夢見那片聖林。先前滿是花環與鳥鳴的地方，如今只留下枯葉與斷裂的樹墩。'},
+    {speaker:'旁白',line:'你認出曾經繫著祈願帶的枝條。它橫倒在泥土裡，再也不會隨風搖曳。'},
+    {speaker:'女祭司',line:'「你終於回來了。」'},
+    {speaker:'旁白',line:'那位勸你收起斧頭的祭司站在林間。她身旁的穀穗發出金色微光。'},
+    {speaker:'狄蜜特',line:'「你為何要砍下我的聖樹？」'},
+    {speaker:'厄律西克同',line:'「我只是想得到自己需要的東西。」'},
+    {speaker:'狄蜜特',line:'「想要多少，才算足夠？」'},
+    {speaker:'旁白',line:'你低頭，看著自己雙手；那天握著斧頭的觸感依然清晰。'},
+    {speaker:'旁白',line:'驚醒時，飢餓並未消退。門外傳來梅斯特拉輕輕的腳步聲。'},
+    {speaker:'梅斯特拉',line:s.flags.trust==='kind'?'「父親，如果您願意，我可以陪您坐一會兒。」':s.flags.trust==='harsh'?'「早飯已放在門口……我就不進去了。」':'「父親，您昨夜是不是又沒有睡好？」'},
+    {speaker:'旁白',line:'聖林沒有答應原諒你。這一天，你只能決定自己如何面對已經造成的傷害。'}]},
+  5:{title:'最後一件能出賣的事物',chapter:'第三幕 · 梅斯特拉的自由',art:'contract',lines:()=>[
+    {speaker:'旁白',line:'第五日。達蒙將家族的帳冊放到桌上，紙頁已被翻得皺折。'},
+    {speaker:'達蒙',line:s.stats.money<=25?'「主人……能夠變賣的東西，真的已所剩無幾。」':'「主人，我們還有財產，但它們撐不起無止境的宴席。」'},
+    {speaker:'旁白',line:'正當你望著帳冊，一名商人帶著隨從來到宅邸，提出一筆交易。'},
+    {speaker:'商人',line:'「我願意付一大筆錢。條件是……讓你的女兒梅斯特拉跟我走。」'},
+    {speaker:'達蒙',line:'「主人！她不是能隨意買賣的貨物！」'},
+    {speaker:'飢餓化身',line:'「你已經拿走那麼多東西。再多拿走一樣，又有何不可？」'},
+    {speaker:'旁白',line:'梅斯特拉從門邊走進來。她聽見了所有的話，目光停在你身上。'},
+    {speaker:'梅斯特拉',line:s.flags.trust==='kind'?'「父親……您不是說過，我們要一起想辦法嗎？連我對您的信任，也能拿來換成食物？」':s.flags.trust==='harsh'?'「我原本以為，您只是不再願意聽我說話。如今，您連我的自由都想拿走嗎？」':'「父親，我知道您很痛苦。但我不是家裡最後一件可以賣掉的東西。」'},
+    {speaker:'厄律西克同',line:'「我……」'},
+    {speaker:'旁白',line:'你曾以為神聖的橡樹只是一種木材。如今，站在你眼前的，是一個能夠說不的人。'},
+    {speaker:'梅斯特拉',line:'「請您自己決定要付出的代價，不要替我決定。」'}]},
+  6:{title:'最後的餐桌',chapter:'第三幕 · 飢餓與代價',art:'lastbread',lines:()=>[
+    {speaker:'旁白',line:'第六日。晨光透進餐廳，長桌上只剩下一盞燭火和最後一小塊麵包。'},
+    {speaker:'旁白',line:s.flags.soldMestra?'梅斯特拉已藉著變形逃離商人。她沒有回來，只有達蒙帶來她的一句話。':'梅斯特拉仍留在家中。她望著你的眼睛，似乎還在思考今天該如何度過。'},
+    {speaker:s.flags.soldMestra?'達蒙':'梅斯特拉',line:s.flags.soldMestra?'「小姐說：我希望父親有一天明白，我不是任何人的財產。」':'「父親，我不知道您還能撐多久。但我們還能決定，不讓更多人一起受苦。」'},
+    {speaker:'旁白',line:s.flags.repented?'你想起自己曾跪在聖林樹墩前。那句道歉沒有消除飢餓，卻讓你記起自己曾傷害過什麼。':'你想起被砍倒的橡樹。那時候的你，甚至沒有回頭看它一眼。'},
+    {speaker:'飢餓化身',line:'「你已經失去了那麼多。再多失去一點，又有什麼關係？」'},
+    {speaker:'厄律西克同',line:'「可是，為什麼不論我吃下多少……還是這麼餓？」'},
+    {speaker:'飢餓化身',line:'「因為你要的，永遠都還有下一口。」'},
+    {speaker:'旁白',line:'這是第六天。你不能靠這頓飯解除詛咒，但仍能決定最後把食物留給誰。'}]}
+};
+const dayChoices={
+  1:dayActions,
+  2:{
+    sell:{name:'出售祖傳金器，換取儲糧',delta:{hunger:-4,money:24,family:-12},story:'你交出了家族珍藏的金器。達蒙收好錢袋，梅斯特拉卻盯著空下來的櫃子：「那些不是可以隨時買回來的回憶。」',echo:'金器換成了糧食，失去的回憶卻無處儲存。'},
+    modest:{name:'節省開支，改用簡單餐食',delta:{hunger:-18,money:-8,family:3},story:'達蒙安排了一份簡樸的餐食。你仍感到飢餓，但庫房保住了一部分存糧。梅斯特拉第一次看見父親試圖克制自己。',echo:'你嘗試讓飢餓暫時退後，但它仍在等待夜幕。'},
+    grand:{name:'繼續舉辦豪華宴席',delta:{hunger:-30,money:-25,family:-8},story:'酒宴再度開始，僕人們卻悄悄縮減了自己的餐食。梅斯特拉看著桌上堆積的空盤，沒有再說話。',echo:'桌上再熱鬧，也填不滿你的胃。'}},
+  3:{
+    protect:{name:'向女兒坦承恐懼，承諾保護她',delta:{hunger:10,money:0,family:18},story:'你承認自己也很害怕。梅斯特拉微微抬起頭：「如果您願意相信我，我想我們還可以一起面對。」你們終於真正交談。',echo:'這天你沒有讓自己吃得更飽，卻讓女兒不再孤單。',trust:'kind'},
+    manage:{name:'請女兒協助管理糧食',delta:{hunger:-16,money:-10,family:6},story:'梅斯特拉與達蒙重新清點糧倉。她依然擔心你，但看見你願意把決定分享給其他人。',echo:'分工不能解除詛咒，卻讓明天多一點餘地。',trust:'kind'},
+    demand:{name:'斥責女兒，要求更多食物',delta:{hunger:-24,money:-18,family:-11},story:'梅斯特拉收回放在桌上的手，將自己的麵包留給你，轉身離開。飢餓化身在耳邊低語：「她不是仍願意給你嗎？」',echo:'你又吞下一頓飯，也吞下了一段沉默。',trust:'harsh'}},
+  4:{
+    market:{name:'前往市集，購買大量食物',delta:{hunger:-28,money:-16,family:-6},story:'你從市集帶回幾大袋糧食。達蒙接過重物，卻發現你仍在盤算下一頓要吃什麼。',echo:'你買回了食物，卻沒買回聖林裡的鳥鳴。'},
+    share:{name:'與家人分食僅存的乾糧',delta:{hunger:-12,money:0,family:2},story:'你與家人分食乾麵包。每個人的份量都不多，卻終於有人願意在餐桌旁與你坐下。',echo:'那是一頓寒酸的餐食，也是一段少有的安寧。'},
+    repent:{name:'親自回到聖林，承認自己的錯誤',delta:{hunger:10,money:0,family:12},story:'你跪在樹墩前，將手按在冰冷的木紋上：「對不起。」森林沒有回答。回家後，你第一次主動告訴梅斯特拉，自己曾經做錯了什麼。',echo:'沒有誰答應原諒你。但這一次，你不再假裝自己沒有傷害過誰。',repent:true}},
+  5:{
+    estate:{name:'出售祖宅，籌措食物',delta:{hunger:-30,money:12,family:-25},story:'祖宅被賣掉了。達蒙帶著僕人收拾最後幾箱物品；梅斯特拉不再擁有兒時的房間，但至少沒被當成商品。',echo:'你保住了一天的食物，卻失去了曾稱為家的地方。'},
+    refuse:{name:'拒絕交易，保護女兒與家園',delta:{hunger:8,money:0,family:13},story:'你拒絕了商人。梅斯特拉沒有笑，只是長長地呼了一口氣。她知道你仍會挨餓，但她終於能自己選擇留下或離開。',echo:'你第一次拒絕把一個生命換成物資。'},
+    daughter:{name:'將梅斯特拉出賣給商人',delta:{hunger:-35,money:32,family:-38},story:'商人付出了金錢。梅斯特拉沒有掙扎，只是望著你：「我曾以為，您會記得那棵樹。」她隨商人離開，白色祈願帶落在門檻上。',echo:'你得到一袋金錢，卻失去了女兒的信任。',sold:true}},
+  6:{
+    take:{name:'獨占家中最後的食物',delta:{hunger:-45,money:-12,family:-17},story:'你把最後的麵包留在自己面前。即使吞下它，你也知道午夜還會飢餓。桌旁的椅子空了。',echo:'你留住了最後一餐，卻不知道還有誰願意陪你。'},
+    leave:{name:'將剩餘的糧食留給家人',delta:{hunger:0,money:0,family:18},story:'你輕輕把麵包推到桌子另一端。梅斯特拉不敢相信自己的眼睛。這不會治癒你，卻讓其他人可以繼續活下去。',echo:'你的胃仍然空著，至少今天不再有人被你奪走食物。'},
+    beg:{name:'走上街頭，向陌生人乞食',delta:{hunger:-28,money:0,family:-8},story:'你坐到十字路口，向路人討一塊麵包。曾經高傲的主人，如今必須開口請求陌生人的幫助。',echo:'你終於願意承認，自己也可能需要別人的施予。'}}
+};
+const nightHunger={1:16,2:18,3:20,4:22,5:24,6:26};
+const legend={hunger:'飢餓',money:'財富',family:'家人'};
+function effectLine(delta){return Object.entries(delta).map(([k,v])=>legend[k]+(v>0?' +':v<0?' −':' 不變')+(v===0?'':Math.abs(v))).join(' ｜ ')}
+function btn(label,action,style=''){return `<button class="btn ${style}" type="button" data-action="${action}">${label}</button>`}
+function stats(){return `<div class="states" aria-label="角色資源狀態">${[['hunger','飢餓','#d18f81'],['money','財富','#dfc088'],['family','家人','#93c2a1']].map(([key,label,color])=>`<div class="state"><div class="head"><span>${label}</span><b>${s.stats[key]}</b></div><div class="bar"><div style="width:${s.stats[key]}%;background:${color}"></div></div></div>`).join('')}</div>`}
+// 後五天改採簡化的氣氛式象徵場景。正式美術可直接替換，不影響程式結構。
+function moodArt(type){
+  const labels={pantry:'逐漸空蕩的庫房',table:'梅斯特拉的餐桌',contract:'最後的契約',lastbread:'最後一塊麵包',shore:'梅斯特拉的逃離',crossroads:'十字路口'};
+  const backdrop=`<defs><linearGradient id="m-bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#555a4e"/><stop offset="1" stop-color="#202c2c"/></linearGradient><radialGradient id="m-shine"><stop stop-color="#e5c68a" stop-opacity=".52"/><stop offset="1" stop-color="#e5c68a" stop-opacity="0"/></radialGradient></defs><rect width="700" height="355" fill="url(#m-bg)"/><ellipse cx="365" cy="112" rx="270" ry="210" fill="url(#m-shine)"/>`;
+  const lamps=`<g stroke="#c8b38e" opacity=".4"><path d="M70 35V283M630 35V283" stroke-width="3"/></g><g fill="#debf86" opacity=".6"><circle cx="70" cy="105" r="7"/><circle cx="630" cy="105" r="7"/></g>`;
+  let scene='';
+  if(type==='pantry')scene=`${lamps}<rect y="289" width="700" height="66" fill="#242b28"/><path d="M120 160h460v9H120M120 270h460v9H120" stroke="#aa8a5f" stroke-width="9"/><g fill="#a98d6d" stroke="#dbc49c" stroke-width="3">${[165,265,365,465,565].map((x,i)=>`<path d="M${x-24} ${224+(i%2)*8}q-12 2 -12 16v24q0 13 15 13h42q15 0 15-13v-24q0-14-12-16z" opacity="${i===3?.4:.9}"/>`).join('')}</g><path d="M260 129h165l-25-43H285Z" fill="#796b55"/><path d="M270 131q32-36 67 0M346 131q28-40 66 0" fill="#a5a06c"/>`;
+  if(type==='table')scene=`<rect y="276" width="700" height="79" fill="#222b2a"/><path d="M115 248Q350 210 585 248L624 319H78Z" fill="#725944" stroke="#c8a475" stroke-width="4"/>${[205,362,510].map(x=>`<ellipse cx="${x}" cy="257" rx="48" ry="14" fill="#c9bf9e"/><ellipse cx="${x}" cy="253" rx="34" ry="7" fill="#565f54"/>`).join('')}<path d="M328 243q24-56 53 0z" fill="#cba16c"/><path d="M420 204q26-25 57 0" stroke="#e1d7ba" stroke-width="6" fill="none"/>${lamps}`;
+  if(type==='contract')scene=`${lamps}<rect y="287" width="700" height="68" fill="#222a28"/><path d="M120 235Q350 200 580 235L610 324H85Z" fill="#5c493a" stroke="#c4a076" stroke-width="4"/><rect x="257" y="195" width="174" height="86" rx="7" fill="#d4c6a5" transform="rotate(-7 344 237)"/><path d="M276 225h135M276 242h122M278 258h91" stroke="#857357" stroke-width="3" opacity=".7" transform="rotate(-7 344 237)"/><path d="M479 201q21-39 34-6q-8 18-35 19" fill="#ded7c0"/><circle cx="419" cy="261" r="12" fill="#9b5d51"/>`;
+  if(type==='lastbread')scene=`<rect y="268" width="700" height="87" fill="#1a2425"/><path d="M104 237Q350 195 596 237L631 310H69Z" fill="#544437" stroke="#af936c" stroke-width="4"/><ellipse cx="360" cy="250" rx="94" ry="22" fill="#d2c5a5"/><ellipse cx="360" cy="248" rx="72" ry="15" fill="#696b59"/><path d="M337 245q2-45 40-33q30 6 28 32Z" fill="#d3ac76"/><path d="M218 212v-65h15v65M212 215h27" stroke="#e5d5ad" stroke-width="8"/><path d="M222 143q-17-27 3-43q20 22 1 43" fill="#f3c987"/>`;
+  if(type==='shore')scene=`<rect y="240" width="700" height="115" fill="#2f5256"/><path d="M0 267Q83 244 160 271T328 269T504 266T700 266" fill="none" stroke="#afc1bb" stroke-width="5" opacity=".4"/><circle cx="535" cy="102" r="66" fill="#c7ac79" opacity=".5"/><path d="M65 305l225 0 76-32 60 0" stroke="#b2a084" stroke-width="9" fill="none"/><path d="M330 235q50-80 85 0Z" fill="#bdb6a4"/><path d="M365 233v-112" stroke="#c9b999" stroke-width="4"/>`;
+  if(type==='crossroads')scene=`<circle cx="505" cy="93" r="70" fill="#c6b588" opacity=".4"/><path d="M0 260Q160 237 350 258T700 255V355H0Z" fill="#384941"/><path d="M258 355L349 260 423 260 536 355Z" fill="#887960" opacity=".75"/><path d="M225 270V147M225 172h100M225 211H130" stroke="#c6b28c" stroke-width="8"/>`;
+  return `<div class="mood-art"><svg class="visual" viewBox="0 0 700 355" role="img" aria-label="${labels[type]||''}" xmlns="http://www.w3.org/2000/svg">${backdrop}${scene}</svg><span class="scene-title">${labels[type]||''}｜示意場景</span></div>`;
+}
+function sceneArt(type){return ['forest','forestcut','dream','banquet'].includes(type)?art(type):moodArt(type)}
+function phaseProgress(){if(s.stage==='home')return 0;if(s.stage==='explore')return 5;if(s.stage==='memory')return 8;if(s.stage==='warning')return 12;if(s.stage==='cutscene')return 14;if(s.stage==='dream')return 17;if(s.stage==='spared'||s.stage==='ending')return 100;let d=Math.max(1,Math.min(6,s.day));return Math.min(99,17+(d-1)*13+(s.stage==='daydialog'?2:s.stage==='choose'?7:11));}
+function fmtRecord(r){return `第 ${r.day} 天：${r.name}`}
+function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(s));}catch(e){}}
+function resetAll(){s=initialState();save();render()}
+function setStage(stage){s.stage=stage;s.step=0;render()}
+function startDay(day){s.day=day;setStage('daydialog')}
+function isAllowed(c){return !c||c.delta.money>=0||s.stats.money>=Math.abs(c.delta.money)}
+function applyChoice(key){
+  const c=dayChoices[s.day]&&dayChoices[s.day][key];if(!c||!isAllowed(c)||s.stage!=='choose')return;
+  const before={...s.stats};
+  for(const [k,v]of Object.entries(c.delta))s.stats[k]=cap(s.stats[k]+v+(k==='hunger'?nightHunger[s.day]:0));
+  if(s.stats.hunger>=100)s.crisis++;else s.crisis=0;
+  if(c.trust)s.flags.trust=c.trust;
+  if(c.repent)s.flags.repented=true;
+  if(c.sold)s.flags.soldMestra=true;
+  s.recent={day:s.day,key,name:c.name,story:c.story,echo:c.echo,before,after:{...s.stats},delta:c.delta,night:nightHunger[s.day]};
+  s.history.push({day:s.day,key,name:c.name});
+  if(s.crisis>=2){s.ending='doom';s.endingWhy='連續兩日飢餓達到 100，身體與理智終於崩潰。';}
+  setStage('result');
+}
+function computeEnding(){
+ if(s.ending)return s.ending;
+ if(s.flags.soldMestra)return 'doom';
+ if(s.stats.family>=75)return 'freedom';
+ if(s.stats.hunger>=100)return 'doom';
+ if(s.stats.money<=25)return 'beggar';
+ return 'empty';
+}
+function finish(){s.ending=computeEnding();setStage('ending')}
+function nextAfterResult(){
+ if(s.ending){finish();return;}
+ if(s.day===5&&s.flags.soldMestra&&!s.flags.escaped){setStage('escape');return;}
+ if(s.day===6){finish();return;}
+ startDay(s.day+1);
+}
+const escapeLines=[
+ {speaker:'旁白',line:'商人把梅斯特拉帶到了海岸。她望著海面，意識到父親已經把她當成可以交換的物品。'},
+ {speaker:'梅斯特拉',line:'「我不是一件貨物。我必須離開這裡。」'},
+ {speaker:'旁白',line:'她向海神求助。神力使她的外貌化為一名漁夫，而追來的商人已經走到碼頭。'},
+ {speaker:'商人',line:'「喂！漁夫，你有沒有看見一名穿白裙的女子？」'},
+ {speaker:'旁白',line:'梅斯特拉握緊手中的漁網。你將以她的視角，決定如何回答。'}
+];
+const escapeResponses={
+ evade:'「我一直忙著補網，沒注意來往的人。」她讓商人看見滿手漁線。對方不耐煩地轉頭離開。',
+ redirect:'「我看見遠處有船剛離岸。」商人追往相反方向，她藉機穿過市場。',
+ silent:'她沉默不語，只把帽沿壓低。商人瞪了她一眼，最後還是走向別處。'
+};
+function render(){
+ let html='';
+ const stage=s.stage;
+ if(stage==='home')html=`<section class="scene"><div class="eyebrow">希臘神話 × 分歧敘事 × 神聖的代價</div><h1>無底之胃</h1><p class="subtitle">THE ENDLESS HUNGER · 2.0 COMPLETE STORY TEST</p>${art('forest')}<p class="story" style="text-align:center">你曾擁有豐饒的大地，卻即將失去最簡單的幸福：<strong>飽足。</strong><br>當飢餓不能被治癒，你仍能決定留下什麼。</p><div class="card amber"><h3>完整劇情測試版</h3><p>聖林探索、父女對話、六日抉擇、梅斯特拉逃離支線與五種結局。這個版本以故事與玩法為優先，場景美術仍使用暫定插圖。</p><p class="fine">另存為獨立檔案，不會覆蓋原本 1.0 或 2.0 第一日試玩版。</p></div><div class="buttons">${btn('走入女神的聖林','start')}${btn('查看原典與改編說明','source','ghost')}</div></section>`;
+ if(stage==='explore'){
+ const clue=s.clue?explore[s.clue]:null;
+ html=`<section class="scene"><div class="eyebrow">序章 · 聖林最後的午後</div><h2>那些尚未被砍倒的事物</h2>${art('forest')}<div class="story"><p>花環垂在古老橡樹枝頭。人們曾向女神祈求豐收，也曾為獲得的祝福留下謝意。</p><p>在你命人動斧之前，可以先看看這片森林裡留下了什麼。</p></div><div class="mini-label">點選探索 · 已發現 ${s.found.length} / 3</div><div class="explore-items">${Object.entries(explore).map(([k,x])=>`<button class="discover" aria-pressed="${s.clue===k}" data-action="clue:${k}" type="button"><span class="symbol">${x.emoji}</span><span class="item-name">${x.name}</span><span class="status">${s.found.includes(k)?'✓ 已發現':'輕觸查看'}</span></button>`).join('')}</div><div class="clue" aria-live="polite">${clue?`<strong>${clue.tag}</strong><p>${clue.description}</p>`:`<strong>探索提示</strong><p>這些物件沒有標準答案。可以依喜歡的順序查看，再繼續劇情。</p>`}</div><div class="buttons">${btn('繼續：與梅斯特拉交談','go-memory')}${btn('回到封面','reset','ghost')}</div></section>`;
+ }
+ const stageScenes={memory:{lines:memory,art:'forest',eyebrow:'序章 · 父親與女兒',title:'午後的談話'},cutscene:{lines:collapse,art:'forestcut',eyebrow:'序章 · 無法挽回',title:'聖樹倒下的那一刻'},dream:{lines:dreams,art:'dream',eyebrow:'第一幕 · 詛咒降臨',title:'飢餓的低語'}};
+ if(stageScenes[stage]||stage==='daydialog'||stage==='escape'){
+ let z;
+ if(stageScenes[stage])z=stageScenes[stage];
+ else if(stage==='daydialog')z={lines:dayData[s.day].lines(),art:dayData[s.day].art,eyebrow:`DAY ${String(s.day).padStart(2,'0')} · ${dayData[s.day].chapter}`,title:dayData[s.day].title};
+ else z={lines:escapeLines,art:'shore',eyebrow:'第五日 · 梅斯特拉視角',title:'逃離商人的掌控'};
+ const line=z.lines[Math.min(s.step,z.lines.length-1)];
+ html=`<section class="scene"><div class="eyebrow">${z.eyebrow}</div><h2>${z.title}</h2>${sceneArt(z.art)}${stage==='daydialog'?stats():''}<div class="dialogue" aria-label="劇情對話"><div class="speaker">${line.speaker}</div><p>${line.line}</p></div><p class="num">對話 ${s.step+1} / ${z.lines.length}</p><div class="buttons">${btn(s.step===z.lines.length-1?'繼續故事':'下一句 ›','advance')}${btn('略過這段對話','skip','ghost')}</div></section>`;
+ }
+ if(stage==='warning')html=`<section class="scene"><div class="eyebrow">序章 · 最後的警告</div><h2>那棵樹是誰的？</h2>${art('forest')}<div class="dialogue"><div class="speaker">女祭司</div><p>「年輕人，收起斧頭吧。大地賜予你穀物與豐收，難道你認為一切都能任意奪走？」</p></div><div class="story"><p>梅斯特拉握緊那條白色祈願帶。達蒙與僕人都在等你下令。</p><p>你可以在故事開始之前就停下，也可以讓神話的悲劇繼續發生。</p></div><div class="buttons">${btn('放下斧頭，保留聖林','spare','secondary')}${btn('無視警告，砍倒聖樹','cut')}</div><p class="fine">前者是原創架空結局；後者進入神話詛咒主線。</p></section>`;
+ if(stage==='spared')html=`<section class="scene"><div class="eyebrow">架空結局 · 未曾降臨的詛咒</div><h2>留下的一棵樹</h2>${art('forest')}<div class="dialogue"><div class="speaker">梅斯特拉</div><p>「父親，您真的願意留下這棵樹嗎？」</p></div><div class="story"><p>你放下斧頭。枝葉在風中輕輕搖晃，梅斯特拉看見白色的祈願帶仍在樹上。</p><p>有些災難，可以在最初的選擇中避免。</p></div><div class="card amber"><p class="mini-label">原創的架空結局</p><p>原典中的厄律西克同並沒有停止砍伐。這段讓玩家體會「一開始就停止」的另一種可能。</p></div><div class="buttons">${btn('從頭重新開始','reset')}${btn('重新探索聖林','start','secondary')}</div></section>`;
+ if(stage==='choose'){
+ const day=dayData[s.day];
+ html=`<section class="scene"><div class="eyebrow">第 ${s.day} / 6 日 · 命運抉擇</div><h2>${day.title}</h2>${sceneArt(day.art)}${stats()}<div class="card amber"><p class="mini-label">這一天，你要如何行動？</p><p>每一天只有一次主要行動。飢餓會在夜間繼續上升；選擇所留下的話語，也可能在後面的故事出現。</p></div><div class="mini-label">選擇一項行動</div>${Object.entries(dayChoices[s.day]).map(([k,c])=>`<button class="day-option ${isAllowed(c)?'':'dimmed-option'}" type="button" data-action="choose:${k}" ${isAllowed(c)?'':'disabled'}><strong>${c.name}</strong><span class="effect">${effectLine(c.delta)}</span>${isAllowed(c)?'':`<span class="effect">財富不足，無法支付所需 ${Math.abs(c.delta.money)} 點</span>`}</button>`).join('')}<p class="fine">今晚飢餓 +${nightHunger[s.day]}。第一次達到 100 只會進入危機；連續兩日達到 100 才提前結束。</p></section>`;
+ }
+ if(stage==='result'&&s.recent){
+ const r=s.recent;
+ html=`<section class="scene"><div class="eyebrow">DAY ${String(s.day).padStart(2,'0')} · 命運留下的痕跡</div><h2>第 ${s.day} 日，夜色降臨</h2>${s.day===4?art('forestcut'):sceneArt(s.day===5?'contract':s.day===6?'lastbread':'dream')}${stats()}<div class="card"><div class="mini-label">你選擇：${r.name}</div><p class="story">${r.story}</p></div><div class="result-note"><strong>這一天的結算</strong><p>${effectLine(r.delta)}</p><p>夜間詛咒：飢餓 +${r.night}</p><p class="fine">結果：飢餓 ${r.before.hunger} → ${r.after.hunger}；財富 ${r.before.money} → ${r.after.money}；家人 ${r.before.family} → ${r.after.family}</p></div>${s.crisis===1?'<div class="status-alert"><strong>飢餓危機！</strong> 你的飢餓已達 100。這次不會立刻失敗，但若下一日仍是 100，將提前陷入悲劇。</div>':''}${s.ending==='doom'&&s.endingWhy?`<div class="status-alert"><strong>詛咒失控</strong><p>${s.endingWhy}</p></div>`:''}<div class="dialogue"><div class="speaker">夜晚的低語</div><p>${r.echo}\n\n「明天，你還有多少東西可以用來交換？」</p></div><div class="buttons">${btn(s.ending?'查看命運結局':s.day===5&&s.flags.soldMestra&&!s.flags.escaped?'切換視角：梅斯特拉的逃離':s.day===6?'揭開最終結局':'迎接下一天','proceed')}${btn('從頭重新開始','confirm-reset','ghost')}</div></section>`;
+ }
+ if(stage==='escapeChoice')html=`<section class="scene"><div class="eyebrow">梅斯特拉支線 · 自由的代價</div><h2>漁夫的回答</h2>${moodArt('shore')}<div class="dialogue"><div class="speaker">商人</div><p>「漁夫！你有沒有看見一個穿白裙的女子？」</p></div><div class="story"><p>你現在以梅斯特拉的視角決定如何回答。不論父親如何行動，她都有權為自己逃離危險。</p></div>${Object.entries({evade:'「我一直在補網，沒看見誰經過。」',redirect:'「或許你該去追剛剛離岸的船。」',silent:'壓低帽沿，裝作專注打理漁網。'}).map(([k,v])=>`<button class="day-option" type="button" data-action="escape-choice:${k}"><strong>${v}</strong></button>`).join('')}</section>`;
+ if(stage==='escapeResult')html=`<section class="scene"><div class="eyebrow">梅斯特拉支線 · 逃離</div><h2>她不是誰的財產</h2>${moodArt('shore')}<div class="dialogue"><div class="speaker">旁白</div><p>${escapeResponses[s.escapeChoice]||escapeResponses.evade}</p></div><div class="story"><p>她成功離開商人的控制。但父親為糧食出賣她的事，不會因此消失。</p><p>梅斯特拉鬆開手，海風將白色的祈願帶吹得很遠。她再次想起聖林中的那棵樹。</p></div><div class="buttons">${btn('回到厄律西克同，迎接第六天','proceed-escape')}</div></section>`;
+ if(stage==='ending'){
+ const key=s.ending||computeEnding();
+ const endings={
+ freedom:{title:'留下的自由',eyebrow:'原創分歧 · 保全了他人',art:'forest',lines:['六天過去，詛咒仍然存在。你未能恢復曾經的飽足，卻沒有讓女兒失去自由。','梅斯特拉將白色祈願帶放在窗邊。她不知道明天會發生什麼，卻終於能自己決定要去往何方。','有些錯誤無法挽回，有些傷害，卻仍能選擇不讓它發生。']},
+ beggar:{title:'十字路口的乞食者',eyebrow:'取材自卡利馬科斯 · 乞食的命運',art:'crossroads',lines:['昔日高傲的主人，如今坐在十字路口，向路人求取一塊麵包。','你已失去大部分財物。飢餓沒有消失，只是把你帶到了另一種生活。','你第一次明白，能夠施予食物，也能夠自由拒絕，是多麼珍貴的事。']},
+ empty:{title:'空虛的盛宴',eyebrow:'原創分歧 · 仍有財物卻失去信任',art:'lastbread',lines:['餐桌上仍有食物，宅邸卻早已沒有昔日的笑聲。','你守住了一部分財產，卻沒能守住與家人彼此信任的時光。','你再次舉起食物，卻不知道下一頓飯還能與誰共享。']},
+ doom:{title:'慾望吞噬一切',eyebrow:'悲劇結局 · 奧維德版本的象徵改編',art:'dream',lines:['家族曾經擁有的一切，終究沒能換來飽足。',s.flags.soldMestra?'梅斯特拉已逃離商人的控制，但她永遠記得父親曾將自己出賣。':'詛咒吞噬了你的理智。即使沒能把所有東西賣掉，你也再無力抵抗。','當一個人將世界的一切視為能夠吞噬的物品，最後，他只剩下自己。']}
+ };
+ const z=endings[key]||endings.doom;
+ const essay=s.flags.repented?'你曾回到那棵樹前道歉；森林沒有回答，至少你曾試著承認錯誤。':'你或許再也沒有機會回到聖林，聽見風吹動祈願帶的聲音。';
+ html=`<section class="scene"><div class="eyebrow">${z.eyebrow}</div><h2>${z.title}</h2>${sceneArt(z.art)}<div class="card amber">${z.lines.map(p=>`<p class="story">${p}</p>`).join('')}<p class="note-changed">${essay}</p></div><div class="mini-label">你的六日紀錄</div><div class="logbook">${s.history.map(r=>`<div class="logentry">${fmtRecord(r)}</div>`).join('')}</div>${stats()}<p class="fine">本次旅程共經歷 ${s.history.length} 日。各項數值與劇情分歧都是遊戲改編，並非古典文本中的規則。</p><div class="buttons">${btn('重新開始：再試另一種命運','confirm-reset')}${btn('閱讀神話來源與改編說明','source','ghost')}</div></section>`;
+ }
+ root.innerHTML=html;
+ const bar=document.getElementById('progress');if(bar)bar.style.width=phaseProgress()+'%';
+ save();
+ try{window.scrollTo({top:0,behavior:'instant'});}catch(e){window.scrollTo(0,0)}
+}
+root.addEventListener('click',(e)=>{
+ const b=e.target.closest('button[data-action]');if(!b||b.disabled)return;
+ const a=b.dataset.action;
+ if(a==='source'){const d=document.querySelector('details');d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'});return;}
+ if(a==='reset'||a==='confirm-reset'){if(a==='confirm-reset'&&!confirm('確定要從聖林重新開始嗎？目前的遊玩進度會被清除。'))return;resetAll();return;}
+ if(a==='start'){s=initialState();setStage('explore');return;}
+ if(a.startsWith('clue:')){const key=a.split(':')[1];if(!explore[key])return;s.clue=key;if(!s.found.includes(key))s.found.push(key);render();return;}
+ if(a==='go-memory'){setStage('memory');return;}
+ if(a==='spare'){setStage('spared');return;}
+ if(a==='cut'){setStage('cutscene');return;}
+ if(a==='advance'||a==='skip'){
+  let lines=[];
+  if(s.stage==='memory')lines=memory;
+  else if(s.stage==='cutscene')lines=collapse;
+  else if(s.stage==='dream')lines=dreams;
+  else if(s.stage==='daydialog')lines=dayData[s.day].lines();
+  else if(s.stage==='escape')lines=escapeLines;
+  else return;
+  if(a==='skip'||s.step>=lines.length-1){
+    if(s.stage==='memory')setStage('warning');
+    else if(s.stage==='cutscene')setStage('dream');
+    else if(s.stage==='dream')startDay(1);
+    else if(s.stage==='daydialog')setStage('choose');
+    else if(s.stage==='escape')setStage('escapeChoice');
+  }else{s.step++;render();}
+  return;
+ }
+ if(a.startsWith('choose:')){applyChoice(a.split(':')[1]);return;}
+ if(a==='proceed'){if(s.stage==='result')nextAfterResult();return;}
+ if(a.startsWith('escape-choice:')&&s.stage==='escapeChoice'){
+  let key=a.split(':')[1];if(!escapeResponses[key])return;s.escapeChoice=key;s.flags.escaped=true;setStage('escapeResult');return;
+ }
+ if(a==='proceed-escape'&&s.stage==='escapeResult'){startDay(6);return;}
+});
+render();
+
+</script>
+</body>
+</html>
